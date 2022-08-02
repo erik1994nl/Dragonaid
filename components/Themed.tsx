@@ -7,12 +7,13 @@ import {
   Text as DefaultText,
   View as DefaultView,
   Button as DefaultButton,
-  TouchableOpacity
-} from 'react-native';
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import Strings from '../constants/Strings';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import Strings from "../constants/Strings";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -33,38 +34,68 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-type CustomButton = {
-  width?: number,
-  height?: number
-}
+// type CustomButton = {
+//   title: string;
+//   width?: number | string;
+//   height?: number | string;
+//   margin?: {
+//     top?: number;
+//     right?: number;
+//     bottom?: number;
+//     left?: number;
+//   };
+//   navigation?: any;
+// };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
+export type TextProps = ThemeProps & DefaultText["props"];
+export type ViewProps = ThemeProps & DefaultView["props"];
 export type ButtonProps = ThemeProps & CustomButton;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background"
+  );
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
 export function Button(props: ButtonProps) {
-  const { width, height } = props;
-  console.log('height', height)
-
-  // return <DefaultButton title={title}/>;
-
+  const { title, width, height, margin, navigation } = props;
   return (
-    <TouchableOpacity style={{ height: height ?? 100, width: width ?? 100, marginTop: 10, backgroundColor: 'red' }}>
-      <Text>My button</Text>
+    <TouchableOpacity
+      style={{
+        height: height ?? 80,
+        width: width ?? Dimensions.get("window").width * 0.9,
+        marginTop: margin?.top ?? 10,
+        marginRight: margin?.right ?? 10,
+        marginBottom: margin?.bottom ?? 10,
+        marginLeft: margin?.left ?? 10,
+        backgroundColor: "rgb(155,20,20)",
+        borderRadius: 7,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      onPress={() => {
+        console.log("nav", navigation);
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 24,
+          fontWeight: "bold",
+        }}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
-  )
+  );
 }
