@@ -5,17 +5,16 @@ import Strings from "../constants/Strings";
 import useColorScheme from "../hooks/useColorScheme";
 import { RootTabScreenProps } from "../types";
 
-export default function HomeScreen({
-  navigation,
-}: RootTabScreenProps<"HomeScreen">) {
+export default function HomeScreen({navigation}: RootTabScreenProps<"HomeScreen">) {
   const colorScheme = useColorScheme();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{Strings.greeting}</Text>
-      <FlatList
+      {/* <FlatList
         data={btnData.map((el) => Object.assign({}, el, navigation))}
         renderItem={renderBtn}
-      ></FlatList>
+      ></FlatList> */}
+      <Button title="Hello" onPress={() => navigation.navigate('TeamManager')}></Button>
     </View>
   );
 }
@@ -33,11 +32,12 @@ const btnData: btnGridBtn[] = [
   },
 ];
 
-const renderBtn = ({ item }: { item: btnGridBtn }) => (
+const renderBtn = ({ item, homeScreenProps }: { item: btnGridBtn, homeScreenProps: RootTabScreenProps<"HomeScreen"> }) => (
   <Button
     title={item.btn.title}
     height={item.btn.height}
     width={item.btn.width}
+    onPress={() => {homeScreenProps.navigation.navigate('TeamManager')}}
   ></Button>
 );
 

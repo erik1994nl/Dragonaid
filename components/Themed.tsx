@@ -34,19 +34,6 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-// type CustomButton = {
-//   title: string;
-//   width?: number | string;
-//   height?: number | string;
-//   margin?: {
-//     top?: number;
-//     right?: number;
-//     bottom?: number;
-//     left?: number;
-//   };
-//   navigation?: any;
-// };
-
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type ButtonProps = ThemeProps & CustomButton;
@@ -69,7 +56,7 @@ export function View(props: ViewProps) {
 }
 
 export function Button(props: ButtonProps) {
-  const { title, width, height, margin, navigation } = props;
+  const { title, width, height, margin, onPress } = props;
   return (
     <TouchableOpacity
       style={{
@@ -84,9 +71,7 @@ export function Button(props: ButtonProps) {
         alignItems: "center",
         justifyContent: "center",
       }}
-      onPress={() => {
-        console.log("nav", navigation);
-      }}
+      onPress={onPress}
     >
       <Text
         style={{

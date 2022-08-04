@@ -8,7 +8,7 @@ type CustomButton = {
     bottom?: number;
     left?: number;
   };
-  navigation?: any;
+  onPress?: any
 };
 type btnGridBtn = {
   btn: CustomButton;
