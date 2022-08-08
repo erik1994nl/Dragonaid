@@ -1,4 +1,9 @@
-type CustomButton = {
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList, RootTabParamList } from "../types";
+
+export type CustomButton = {
   title: string;
   width?: number | string;
   height?: number | string;
@@ -8,13 +13,18 @@ type CustomButton = {
     bottom?: number;
     left?: number;
   };
-  onPress?: any
+  navDestination?: keyof RootStackParamList;
+  onPress?: any;
 };
-type btnGridBtn = {
+export type btnGridBtn = {
   btn: CustomButton;
-  //  {
-  //   title: string;
-  //   height?: number | string;
-  //   width?: number | string;
-  // };
+  navigation?: CompositeNavigationProp<
+    BottomTabNavigationProp<RootTabParamList, "HomeScreen", undefined>,
+    NativeStackNavigationProp<RootStackParamList, any, undefined>
+  >;
+};
+
+export type Peddler = {
+  name: string;
+  weight: number;
 };

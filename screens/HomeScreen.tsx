@@ -1,43 +1,52 @@
-import { Dimensions, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 
 import { Text, View, Button } from "../components/Themed";
 import Strings from "../constants/Strings";
 import useColorScheme from "../hooks/useColorScheme";
 import { RootTabScreenProps } from "../types";
+import { btnGridBtn } from "../types/Types";
 
-export default function HomeScreen({navigation}: RootTabScreenProps<"HomeScreen">) {
+export default function HomeScreen({
+  navigation,
+}: RootTabScreenProps<"HomeScreen">) {
   const colorScheme = useColorScheme();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{Strings.greeting}</Text>
-      {/* <FlatList
-        data={btnData.map((el) => Object.assign({}, el, navigation))}
+      <FlatList
+        data={btnData.map((el) => {
+          return { ...el, navigation: navigation };
+        })}
         renderItem={renderBtn}
-      ></FlatList> */}
-      <Button title="Hello" onPress={() => navigation.navigate('TeamManager')}></Button>
+      ></FlatList>
+      {/* <Button title="Hello" onPress={() => navigation.navigate('TeamManager')}></Button> */}
     </View>
   );
 }
-
+// , navigation: RootTabScreenProps<"HomeScreen">
 const btnData: btnGridBtn[] = [
   {
     btn: {
       title: "Manage Team",
+      navDestination: "TeamManager",
     },
   },
   {
     btn: {
-      title: "Second button",
+      title: "TODO Modal",
+      navDestination: "Modal",
     },
   },
 ];
 
-const renderBtn = ({ item, homeScreenProps }: { item: btnGridBtn, homeScreenProps: RootTabScreenProps<"HomeScreen"> }) => (
+const renderBtn = ({ item }: { item: btnGridBtn }) => (
   <Button
     title={item.btn.title}
     height={item.btn.height}
     width={item.btn.width}
-    onPress={() => {homeScreenProps.navigation.navigate('TeamManager')}}
+    onPress={() => {
+      item.navigation?.navigate(item.btn.navDestination ?? "NotFound");
+    }}
   ></Button>
 );
 

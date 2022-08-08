@@ -1,31 +1,62 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
+import { Dimensions, FlatList, StyleSheet, TextInput } from "react-native";
 
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+import { Text, View, Button } from "../components/Themed";
+import { Peddler } from "../types/Types";
 
 export default function TeamManager() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/ModalScreen.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+      <FlatList data={Peddlers} renderItem={renderPeddlers}></FlatList>
+      <View style={styles.addPeddler}>
+        <Button
+          title="hoi"
+          width={Dimensions.get("window").width * 0.4}
+        ></Button>
+        <TextInput
+          keyboardType="numeric"
+          style={styles.textInput}
+          onChangeText={(text) => onChangeWeight(text)}
+        >
+          33
+        </TextInput>
+      </View>
     </View>
   );
 }
 
+const Peddlers: Peddler[] = [
+  {
+    name: "Cees",
+    weight: 10,
+  },
+];
+
+const renderPeddlers = ({ item: peddler }: { item: Peddler }) => (
+  <View>
+    <Text>
+      {peddler.name} weegt {peddler.weight}kg
+    </Text>
+  </View>
+);
+
+const onChangeWeight = (w: string) => {
+  console.log("w", w);
+};
+
 const styles = StyleSheet.create({
+  addPeddler: {
+    flexDirection: "row",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  textInput: {
+    width: Dimensions.get("window").width * 0.4,
+    borderColor: "black",
+    borderWidth: 1,
+    fontSize: 30,
   },
   title: {
     fontSize: 20,

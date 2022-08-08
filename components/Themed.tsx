@@ -14,6 +14,7 @@ import {
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import Strings from "../constants/Strings";
+import { CustomButton } from "../types/Types";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
