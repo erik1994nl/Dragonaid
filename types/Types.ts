@@ -24,6 +24,20 @@ export type btnGridBtn = {
   >;
 };
 
+export class PeddlerClass {
+  name: string = "";
+  weight: number = 0;
+
+  constructor(peddler: Peddler) {
+    this.name = peddler.name;
+    this.weight = peddler.weight;
+  }
+
+  getKey = () => {
+    return `${this.name}${this.weight}`;
+  };
+}
+
 export type Peddler = {
   name: string;
   weight: number;
