@@ -33,8 +33,8 @@ const btnData: btnGridBtn[] = [
   },
   {
     btn: {
-      title: "TODO Modal",
-      navDestination: "Modal",
+      title: "Layout creator",
+      navDestination: "LayoutCreator",
     },
   },
 ];

@@ -1,35 +1,43 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, TextInput } from "react-native";
 
 import { Text, View, Button } from "../components/Themed";
-import { Peddler, PeddlerClass } from "../types/Types";
+import { GenderEnum, Paddler as Paddler, SideEnum } from "../types/Types";
 
 export default function TeamManager() {
-  getPeddlers();
+  // Get Paddlers from storage
+  const [paddlers, setPaddlers] = useState<Paddler[]>([]);
+  useEffect(() => {
+    AsyncStorage.getItem("paddlers").then((paddlerData) => {
+      if (paddlerData !== null) {
+        setPaddlers(JSON.parse(paddlerData));
+      } else {
+        setPaddlers([]);
+      }
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
-      <FlatList data={Peddlers} renderItem={renderPeddlers}></FlatList>
-      <View style={styles.addPeddler}>
+      <FlatList data={paddlers} renderItem={renderPaddlers}></FlatList>
+      <View style={styles.addPaddler}>
         <Button
           title="Set"
           width={Dimensions.get("window").width * 0.2}
           onPress={() => {
-            console.log("setting peddlers");
-            AsyncStorage.setItem("peddlers", JSON.stringify(Peddlers));
+            const paddlersToAdd = mockPaddlers;
+            setPaddlers(paddlersToAdd);
+            AsyncStorage.setItem("paddlers", JSON.stringify(paddlersToAdd));
           }}
         ></Button>
         <Button
-          title="Get"
+          title="X"
           width={Dimensions.get("window").width * 0.2}
           onPress={async () => {
-            const jsonPeddler = await AsyncStorage.getItem("peddlers");
-            console.log("Peddler?", jsonPeddler);
-            if (jsonPeddler !== null) {
-              const parsedPeddler: Peddler = JSON.parse(jsonPeddler);
-              console.log("parsed peddler?", parsedPeddler);
-              console.log("name?", parsedPeddler.name);
-              console.log("weight?", parsedPeddler.weight);
-            }
+            const emptyPaddlers: Paddler[] = [];
+            setPaddlers(emptyPaddlers);
+            AsyncStorage.setItem("paddlers", JSON.stringify(emptyPaddlers));
           }}
         ></Button>
         <TextInput
@@ -44,40 +52,149 @@ export default function TeamManager() {
   );
 }
 
-const getPeddlers = () => {
-  AsyncStorage.getItem("peddlers").then((peddlerData) => {
-    console.log("peddlerData?", peddlerData);
-    if (peddlerData !== null) {
-      Peddlers = JSON.parse(peddlerData);
-    }
-  });
-};
-
-let Peddlers: Peddler[] = [
+const mockPaddlers: Paddler[] = [
+  {
+    name: "Willem",
+    weight: 97,
+    side: SideEnum.Left,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Otto",
+    weight: 100,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
   {
     name: "Cees",
-    weight: 10,
+    weight: 100,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Marijke",
+    weight: 65,
+    side: SideEnum.Left,
+    gender: GenderEnum.Female,
   },
   {
     name: "Erik",
-    weight: 300,
+    weight: 75,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Carin",
+    weight: 77,
+    side: SideEnum.Left,
+    gender: GenderEnum.Female,
+  },
+  {
+    name: "Majid",
+    weight: 61,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Joop",
+    weight: 84,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Olga",
+    weight: 50,
+    side: SideEnum.Right,
+    gender: GenderEnum.Female,
+  },
+  {
+    name: "Johan",
+    weight: 111,
+    side: SideEnum.Left,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Daniel",
+    weight: 80,
+    side: SideEnum.Right,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Erwin",
+    weight: 88,
+    side: SideEnum.Left,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Lieke",
+    weight: 64,
+    side: SideEnum.Left,
+    gender: GenderEnum.Female,
+  },
+  {
+    name: "Thyssen",
+    weight: 93,
+    side: SideEnum.Left,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Fred",
+    weight: 104,
+    side: SideEnum.Right,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Gerda",
+    weight: 68,
+    side: SideEnum.Left,
+    gender: GenderEnum.Female,
+  },
+  {
+    name: "Renie",
+    weight: 69,
+    side: SideEnum.Left,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Emma",
+    weight: 87,
+    side: SideEnum.Right,
+    gender: GenderEnum.Female,
+  },
+  {
+    name: "Jorge",
+    weight: 70,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Frank",
+    weight: 82,
+    side: SideEnum.Right,
+    gender: GenderEnum.Male,
+  },
+  {
+    name: "Edwin",
+    weight: 92,
+    side: SideEnum.Both,
+    gender: GenderEnum.Male,
   },
 ];
 
-const renderPeddlers = ({ item: peddler }: { item: Peddler }) => (
+const renderPaddlers = ({ item: paddler }: { item: Paddler }) => (
   <View>
     <Text>
-      {peddler.name} weegt {peddler.weight}kg
+      {paddler.name} weegt {paddler.weight}kg
     </Text>
   </View>
 );
 
 const onChangeWeight = (w: string) => {
-  console.log("w", w);
+  // Weight change function
 };
 
 const styles = StyleSheet.create({
-  addPeddler: {
+  addPaddler: {
     flexDirection: "row",
   },
   container: {

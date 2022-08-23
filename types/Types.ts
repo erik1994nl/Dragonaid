@@ -24,13 +24,13 @@ export type btnGridBtn = {
   >;
 };
 
-export class PeddlerClass {
+export class PaddlerClass {
   name: string = "";
   weight: number = 0;
 
-  constructor(peddler: Peddler) {
-    this.name = peddler.name;
-    this.weight = peddler.weight;
+  constructor(paddler: Paddler) {
+    this.name = paddler.name;
+    this.weight = paddler.weight;
   }
 
   getKey = () => {
@@ -38,7 +38,25 @@ export class PeddlerClass {
   };
 }
 
-export type Peddler = {
+export const enum SideEnum {
+  Left = 0,
+  Right = 1,
+  Both = 2,
+}
+
+export const enum GenderEnum {
+  Male = 0,
+  Female = 1,
+  Other = 2,
+}
+
+export type Paddler = {
   name: string;
   weight: number;
+  side: SideEnum;
+  gender: GenderEnum;
+};
+
+export type boatLayout = {
+  // Boat layout?!
 };
