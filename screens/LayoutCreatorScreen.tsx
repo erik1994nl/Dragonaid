@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { Dimensions, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import { Boat } from "../components/Boat";
 import { LayoutCreator } from "../components/layoutScripts/LayoutRules";
 import { LeftRightWeight } from "../components/layoutScripts/LeftRightWeight";
 import { Button, Text, View } from "../components/Themed";
-import { Boat, BoatLayout, Paddler, RaceRestrictions } from "../types/Types";
+import { BoatLayout, Paddler, RaceRestrictions } from "../types/Types";
 
 export default function LayoutCreatorScreen() {
   // Get Paddlers from storage
@@ -33,12 +34,13 @@ export default function LayoutCreatorScreen() {
         onPress={() => {
           const layoutCreator = new LayoutCreator(paddlers, raceRestrictions);
           layoutCreator.setLayoutRule(new LeftRightWeight());
+          layoutCreator.applyRule();
           const leftRightLayouts = layoutCreator.createLayouts();
 
           const boat = new Boat(raceRestrictions);
           boat.setLayout(leftRightLayouts[0]);
           boat.printLayout();
-          setTopLayouts(boat.layout);
+          // setTopLayouts(boat.layout);
         }}
       ></Button>
     </View>
