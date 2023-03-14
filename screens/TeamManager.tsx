@@ -44,9 +44,9 @@ export default function TeamManager() {
           keyboardType="numeric"
           style={styles.textInput}
           onChangeText={(text) => onChangeWeight(text)}
-        >
-          33
-        </TextInput>
+          placeholder="33"
+          placeholderTextColor={"grey"}
+        />
       </View>
     </View>
   );

@@ -63,13 +63,13 @@ function RootNavigator() {
         />
         <Stack.Screen name="TeamManager" component={TeamManager} />
         <Stack.Screen name="LayoutCreator" component={LayoutCreatorScreen} />
+        <Stack.Screen
+          name="NotFound"
+          component={NotFoundScreen}
+          options={{ title: "Oops!" }}
+        />
       </Stack.Group>
 
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
     </Stack.Navigator>
   );
 }
